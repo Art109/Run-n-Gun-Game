@@ -31,20 +31,22 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
+            return;
         }
-        else
-        {
-            Instance = this;
-        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
 
         moveAction = playerControls.FindActionMap(actionMapName).FindAction(move);
         lookAction = playerControls.FindActionMap(actionMapName).FindAction(look);
         jumpAction = playerControls.FindActionMap(actionMapName).FindAction(jump);
         shootAction = playerControls.FindActionMap(actionMapName).FindAction(shoot);
+
+        RegisterInputActions();
     }
     
     void RegisterInputActions()

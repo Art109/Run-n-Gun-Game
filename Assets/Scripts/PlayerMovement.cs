@@ -4,23 +4,32 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    PlayerController playerController;
+    PlayerInputHandler inputHandler;
+
+    [Header("Movement Speed")]
     [SerializeField] float moveSpeed;
-    
-    void Start()
+
+    [Header("Jump Params")]
+    [SerializeField] float jumpForce;
+
+
+    private void Awake()
     {
-        
+        playerController = GetComponent<PlayerController>();
+        inputHandler = PlayerInputHandler.Instance;
     }
 
-    
-    void Update()
+
+
+    private void Update()
     {
-        
+        HandleMovement();
     }
 
-    void Move() { }
-
-    void GroundCheck()
+    void HandleMovement()
     {
 
     }
+
 }
