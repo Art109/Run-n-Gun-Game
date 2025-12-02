@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    PlayerController playerController;
-    PlayerInputHandler inputHandler;
+
+    [Header("Rigidbody")]
+    [SerializeField]Rigidbody2D rb;
 
     [Header("Movement Speed")]
     [SerializeField] float moveSpeed;
@@ -14,22 +15,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce;
 
 
-    private void Awake()
+
+    public void Move(Vector2 vector)
     {
-        playerController = GetComponent<PlayerController>();
-        inputHandler = PlayerInputHandler.Instance;
+        rb.velocity = vector;
     }
+    
 
 
-
-    private void Update()
-    {
-        HandleMovement();
-    }
-
-    void HandleMovement()
-    {
-
-    }
 
 }
