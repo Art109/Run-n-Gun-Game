@@ -7,9 +7,13 @@ public class PlayerController : MonoBehaviour
 {
 
 
-    [Header("PlayerMovement")]
+    [Header("Player Movement")]
     [SerializeField]PlayerMovement movement;
     float movementInput;
+
+    [Header("Player Shoot")]
+    [SerializeField]PlayerShoot playerShoot;
+
 
     void Awake()
     {
@@ -34,8 +38,17 @@ public class PlayerController : MonoBehaviour
     }
     public void OnJump(InputAction.CallbackContext context) 
     {
-        if(context.performed)    
+        if (context.performed)
+        {
             Debug.Log("Pulei");
+            movement.HandleJump();
+        }
+
+    }
+
+    public void OnShoot(InputAction.CallbackContext context)
+    {
+
     }
 
 

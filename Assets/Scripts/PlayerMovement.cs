@@ -45,7 +45,13 @@ public class PlayerMovement : MonoBehaviour
             
     }
 
-    public void HandleJump() { }
+    public void HandleJump() 
+    {
+        if (GroundCheck())
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
+    }
 
     public bool GroundCheck()
     {

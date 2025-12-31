@@ -1,18 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public IGun Gun { get; private set; }
+   
     void Start()
     {
-        
+        if (Gun == null)
+            ChangeGun(new Pistol());
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Shoot()
     {
-        
+        if (Gun == null)
+            return;
+
+        Gun.Shoot();
+
     }
+
+    public void ChangeGun(IGun newGun)
+    {
+        Gun = newGun;
+    }
+
 }
+
+
+
+
