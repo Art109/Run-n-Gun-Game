@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pistol : IGun
+public class Pistol : Gun
 {
 
-    public void Shoot() { }
+    public override void Shoot(Transform shootPoint, float direction, GameObject bulletPrefab) 
+    {
+        GameObject bullet = GameObject.Instantiate(bulletPrefab, shootPoint);
+        bullet.GetComponent<Bullet>().SetDirection(direction);
+    }
 }

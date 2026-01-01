@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement Params")]
     [SerializeField] float moveSpeed;
-    float playerDirection = 1;
+    public float PlayerDirection { get; private set; }
 
     [Header("Jump Params")]
     [SerializeField] float jumpForce;
@@ -32,15 +32,15 @@ public class PlayerMovement : MonoBehaviour
     public void FlipCharacter(float direction)
     {
         Debug.Log("Direction: " +  direction); 
-        Debug.Log("Player Direction 1: " + playerDirection);
-        if (direction != playerDirection)
+        Debug.Log("Player Direction 1: " + PlayerDirection);
+        if (direction != PlayerDirection)
         {
             Vector3 scale = playerTransform.localScale;
             scale.x *= -1;
             playerTransform.localScale = scale;
 
-            playerDirection *= -1;
-            Debug.Log("Player Direction 2: " + playerDirection);
+            PlayerDirection *= -1;
+            Debug.Log("Player Direction 2: " + PlayerDirection);
         }
             
     }

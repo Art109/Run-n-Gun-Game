@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
     {
         
         movement.Move(movementInput);
-        
 
     }
 
@@ -48,6 +47,11 @@ public class PlayerController : MonoBehaviour
 
     public void OnShoot(InputAction.CallbackContext context)
     {
+        if (context.performed) 
+        {
+            Debug.Log("Atirei");
+            playerShoot.Shoot(movement.PlayerDirection);
+        }
 
     }
 

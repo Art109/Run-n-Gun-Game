@@ -5,26 +5,36 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    public IGun Gun { get; private set; }
+
+    public Gun CurrentGun { get; private set; }
+
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField]Transform shootPoint;
    
     void Start()
     {
-        if (Gun == null)
+        if (CurrentGun == null)
             ChangeGun(new Pistol());
     }
 
-    public void Shoot()
+    public void Shoot(float direction)
     {
-        if (Gun == null)
+        if (CurrentGun == null)
             return;
 
-        Gun.Shoot();
+
+        CurrentGun.Shoot(shootPoint, direction, bulletPrefab);
 
     }
 
-    public void ChangeGun(IGun newGun)
+    public void ChangeGun(Gun newGun)
     {
-        Gun = newGun;
+        CurrentGun = newGun;
+    }
+
+    public void ChangeAmmo()
+    {
+
     }
 
 }

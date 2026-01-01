@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IGun
+public interface IDamageble 
 {
-    public void Shoot();
+    public void TakeDamage(float damage);
 }
