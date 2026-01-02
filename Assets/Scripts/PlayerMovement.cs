@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement Params")]
     [SerializeField] float moveSpeed;
-    public float PlayerDirection { get; private set; }
+    public float PlayerDirection { get; private set; } = 1f;
 
     [Header("Jump Params")]
     [SerializeField] float jumpForce;

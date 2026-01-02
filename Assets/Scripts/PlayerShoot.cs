@@ -22,7 +22,6 @@ public class PlayerShoot : MonoBehaviour
         if (CurrentGun == null)
             return;
 
-
         CurrentGun.Shoot(shootPoint, direction, bulletPrefab);
 
     }

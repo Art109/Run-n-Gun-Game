@@ -453,7 +453,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 1537741482}
-  playerShoot: {fileID: 0}
+  playerShoot: {fileID: 844567129}
 --- !u!50 &611731380
 Rigidbody2D:
   serializedVersion: 4

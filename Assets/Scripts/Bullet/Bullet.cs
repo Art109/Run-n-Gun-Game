@@ -15,15 +15,18 @@ public class Bullet : MonoBehaviour
 
     public void SetDirection(float direction)
     {
+        Debug.Log(direction);
         rb.velocity = new Vector2(direction, 0) * data.Speed;
     }
     
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if( collision is IDamageble)
+        IDamageble damageable = collision.GetComponent<IDamageble>();
+
+        if (damageable != null)
         {
-            collision.GetComponent<IDamageble>().TakeDamage(data.Damage);
+            damageable.TakeDamage(data.Damage);
         }
 
         Explode();
