@@ -8,10 +8,25 @@ public class Bullet : MonoBehaviour
     [SerializeField] BulletData data;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Rigidbody2D rb;
+
+    void Awake()
+    {
+        if (data == null)
+            Debug.LogError("BulletData não atribuído", this);
+
+        if (rb == null)
+            rb = GetComponent<Rigidbody2D>();
+
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     void Start()
     {
         spriteRenderer.sprite = data.Sprite;
+        Destroy(gameObject, 2f);
     }
+
 
     public void SetDirection(float direction)
     {
@@ -35,6 +50,6 @@ public class Bullet : MonoBehaviour
     void Explode()
     {
         //Animação de Explodir ao Contato
-        //Destroy
+        Destroy(gameObject);
     }
 }

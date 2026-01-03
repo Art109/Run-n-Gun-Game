@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO.Enumeration;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Ammo", menuName = "Ammuniton")]
+[CreateAssetMenu(menuName = "Ammo/NormalBullet")]
 public class BulletData : ScriptableObject 
 {
     [SerializeField] int damage;

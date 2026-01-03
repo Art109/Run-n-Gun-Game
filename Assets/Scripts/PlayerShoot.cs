@@ -6,15 +6,22 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
 
-    public Gun CurrentGun { get; private set; }
-
+    [SerializeField] Gun CurrentGun;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField]Transform shootPoint;
+
+    bool canShoot = true;
    
     void Start()
     {
         if (CurrentGun == null)
-            ChangeGun(new Pistol());
+            Debug.LogError("Arma não Equipada");
+            
+    }
+
+    void Update()
+    {
+        
     }
 
     public void Shoot(float direction)
@@ -22,8 +29,21 @@ public class PlayerShoot : MonoBehaviour
         if (CurrentGun == null)
             return;
 
-        CurrentGun.Shoot(shootPoint, direction, bulletPrefab);
+        if (canShoot)
+        {
+            CurrentGun.Shoot(shootPoint, direction, bulletPrefab);
+            StartCoroutine(FireRateControl());
+        }
+            
 
+    }
+
+    IEnumerator FireRateControl()
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(CurrentGun.FireRate);
+        canShoot = true;
+        yield return null;
     }
 
     public void ChangeGun(Gun newGun)
