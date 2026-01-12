@@ -8,6 +8,8 @@ public abstract class Enemy : MonoBehaviour , IDamageble
 
     int currentHp;
 
+    float fireCooldown;
+
     private void Awake()
     {
         if (data == null)
@@ -19,6 +21,28 @@ public abstract class Enemy : MonoBehaviour , IDamageble
 
         currentHp = data.Hp;
     }
+
+    protected virtual void Update()
+    {
+        UpdateFireCooldown();
+    }
+
+    protected void UpdateFireCooldown()
+    {
+        if(fireCooldown > 0f)
+            fireCooldown -= Time.deltaTime;
+    }
+
+    protected bool CanShoot()
+    {
+       return fireCooldown <= 0f && data.FireRate > 0f;
+    }
+
+    protected void ResetFireCooldown()
+    {
+        fireCooldown = 1f / data.FireRate;
+    }
+
     public void TakeDamage(int damage)
     {
         currentHp -= damage;
@@ -41,9 +65,21 @@ public abstract class Enemy : MonoBehaviour , IDamageble
 
     private void OnDrawGizmos()
     {
+        if (data == null)
+            return;
 
-        if (data == null) return;
+        DrawBaseGizmos();
+        DrawExtraGizmos();
+    }
+
+    protected virtual void DrawBaseGizmos()
+    {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, data.Range);
+    }
+
+    protected virtual void DrawExtraGizmos()
+    {
+        // vazio por padrão
     }
 }
