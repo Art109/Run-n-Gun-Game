@@ -2,45 +2,45 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour , IDamageble
 {
-    public EnemyData data;
+    [Header("Core")]
+    [SerializeField] EnemyData data;
+    [SerializeField] Gun currentGun;
+    [SerializeField] Transform shootPoint;
+    [SerializeField] LayerMask playerLayer;
+    public EnemyData Data { get { return data; } }
+    public Gun CurrentGun { get { return currentGun; } }
+    protected Transform ShootPoint => shootPoint;
+    public LayerMask PlayerLayer {  get { return playerLayer; } }
 
-    public LayerMask playerLayer;
 
+    protected GunRuntime gunRuntime;
     int currentHp;
 
-    float fireCooldown;
+    
 
     private void Awake()
     {
-        if (data == null)
+        if (data == null || currentGun == null || shootPoint == null)
         {
-            Debug.LogError($"{name} não possui EnemyData atribuído.", this);
+            Debug.LogError($"{name} está com referencias faltando.", this);
             enabled = false;
             return;
         }
 
+
+        gunRuntime = new GunRuntime(currentGun);
         currentHp = data.Hp;
     }
 
     protected virtual void Update()
     {
-        UpdateFireCooldown();
+        gunRuntime.Tick();
+        Detect();
     }
 
-    protected void UpdateFireCooldown()
+    protected void TryShoot(Vector2 direction)
     {
-        if(fireCooldown > 0f)
-            fireCooldown -= Time.deltaTime;
-    }
-
-    protected bool CanShoot()
-    {
-       return fireCooldown <= 0f && data.FireRate > 0f;
-    }
-
-    protected void ResetFireCooldown()
-    {
-        fireCooldown = 1f / data.FireRate;
+        gunRuntime.TryShoot(shootPoint, direction, Data.Bullet);
     }
 
     public void TakeDamage(int damage)
@@ -58,8 +58,6 @@ public abstract class Enemy : MonoBehaviour , IDamageble
     {
         Destroy(gameObject);
     }
-
-    protected abstract void Shoot();
 
     protected abstract void Detect();
 

@@ -9,14 +9,14 @@ public class EnemyData : ScriptableObject
     [SerializeField] int damage;
     public int Damage { get { return damage; } }
 
-    [SerializeField] int fireRate;
-    public int FireRate { get { return fireRate; } }
+    [SerializeField] float moveSpeed;
 
-    [SerializeField] float speed;
-
-    public float Speed { get { return speed; } }
+    public float MoveSpeed { get { return moveSpeed; } }
 
     [SerializeField] int range;
-    public int Range { get { return range; } }  
+    public int Range { get { return range; } }
+
+    [SerializeField] GameObject bulletPrefab;
+    public GameObject Bullet { get { return bulletPrefab; } }
 
 }

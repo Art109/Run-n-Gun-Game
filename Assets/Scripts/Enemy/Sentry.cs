@@ -10,8 +10,6 @@ public class Sentry : Enemy
     {
         base.Update();
 
-        Detect();
-
         if (!active) 
         { 
             return;
@@ -21,18 +19,10 @@ public class Sentry : Enemy
 
         
     }
-    protected override void Shoot()
-    {
-        if (!CanShoot())
-            return;
-
-        ResetFireCooldown();
-        Debug.Log("Sentry Disparou");
-    }
 
     protected override void Detect()
     {
-       Collider2D player = Physics2D.OverlapCircle(transform.position, data.Range, playerLayer);
+       Collider2D player = Physics2D.OverlapCircle(transform.position, Data.Range, PlayerLayer);
 
         active = player != null;
         target = player != null ? player.transform : null;
@@ -45,7 +35,7 @@ public class Sentry : Enemy
 
         if (IsAligned())
         {
-            Shoot();
+            TryShoot(ShootPoint.up);
         }
     }
 
@@ -70,8 +60,8 @@ public class Sentry : Enemy
         RaycastHit2D hit = Physics2D.Raycast(
             transform.position,
             transform.up,
-            data.Range,
-            playerLayer
+            Data.Range,
+            PlayerLayer
         );
 
         rayHit = hit.collider != null;
@@ -87,7 +77,7 @@ public class Sentry : Enemy
         Gizmos.color = rayHit ? Color.red : Color.green;
         Gizmos.DrawLine(
             transform.position,
-            transform.position + transform.up * data.Range
+            transform.position + transform.up * Data.Range
         );
     }
 

@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
         if (context.performed) 
         {
             Debug.Log("Atirei");
-            playerShoot.Shoot(movement.PlayerDirection);
+            playerShoot.Shoot(new Vector2(movement.PlayerDirection,0));
         }
 
     }

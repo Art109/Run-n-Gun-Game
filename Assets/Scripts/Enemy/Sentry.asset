@@ -17,3 +17,4 @@ MonoBehaviour:
   fireRate: 1
   speed: 5
   range: 5
+  bulletPrefab: {fileID: 3855809050500161937, guid: 11a533aec64f2014c9a70d6b74cd1cce, type: 3}

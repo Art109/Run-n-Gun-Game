@@ -6,49 +6,50 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
 
-    [SerializeField] Gun CurrentGun;
+    [SerializeField] Gun currentGun;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField]Transform shootPoint;
+    GunRuntime gunRuntime;
 
-    bool canShoot = true;
-   
+
+    private void Awake()
+    {
+        if (currentGun == null)
+        {
+            Debug.LogError("Arma não Equipada");
+            enabled = false;
+            return;
+        }
+            
+
+        gunRuntime = new GunRuntime(currentGun);
+    }
     void Start()
     {
-        if (CurrentGun == null)
-            Debug.LogError("Arma não Equipada");
+        
             
     }
 
     void Update()
     {
-        
+        gunRuntime.Tick();
     }
 
-    public void Shoot(float direction)
+    public void Shoot(Vector2 direction)
     {
-        if (CurrentGun == null)
+        if (currentGun == null)
             return;
 
-        if (canShoot)
-        {
-            CurrentGun.Shoot(shootPoint, direction, bulletPrefab);
-            StartCoroutine(FireRateControl());
-        }
-            
+            gunRuntime.TryShoot(shootPoint, direction, bulletPrefab);
+     
 
-    }
-
-    IEnumerator FireRateControl()
-    {
-        canShoot = false;
-        yield return new WaitForSeconds(CurrentGun.FireRate);
-        canShoot = true;
-        yield return null;
     }
 
     public void ChangeGun(Gun newGun)
     {
-        CurrentGun = newGun;
+        currentGun = newGun;
+
+        gunRuntime = new GunRuntime(currentGun);
     }
 
     public void ChangeAmmo()

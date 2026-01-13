@@ -28,6 +28,12 @@ public class Bullet : MonoBehaviour
     }
 
 
+    public void SetDirection(Vector2 direction)
+    {
+        direction.Normalize();
+        rb.velocity = direction * data.Speed;
+    }
+
     public void SetDirection(float direction)
     {
         Debug.Log(direction);
