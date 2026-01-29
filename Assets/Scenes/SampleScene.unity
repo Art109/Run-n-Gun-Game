@@ -852,7 +852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa436450f09a897418f520563134905d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentGun: {fileID: 11400000, guid: ae922218e47259c4daa26a4f3e1441b0, type: 2}
+  currentGun: {fileID: 11400000, guid: ae922218e47259c4daa26a4f3e1441b0, type: 2}
   bulletPrefab: {fileID: 3855809050500161937, guid: 33ef7195bc850de468cc8435b56ea10a, type: 3}
   shootPoint: {fileID: 1778396485}
 --- !u!1 &1462098328
@@ -887,6 +887,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: db4097f5361355141975871117a1e442, type: 2}
+  currentGun: {fileID: 11400000, guid: ae922218e47259c4daa26a4f3e1441b0, type: 2}
   shootPoint: {fileID: 2122051492}
   playerLayer:
     serializedVersion: 2

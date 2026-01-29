@@ -20,7 +20,7 @@ public class Sentry : Enemy
         
     }
 
-    protected override void Detect()
+    protected override void Detect() // Verifies if player is on range
     {
        Collider2D player = Physics2D.OverlapCircle(transform.position, Data.Range, PlayerLayer);
 
@@ -29,17 +29,17 @@ public class Sentry : Enemy
 
     }
 
-    void Search()
+    void Search() //Search for the player to align the shoot
     {
         Aim();
 
         if (IsAligned())
         {
-            TryShoot(ShootPoint.up);
+            TryShoot(ShootPoint.up);// Verifies if the enemy can shoot
         }
     }
 
-    void Aim()
+    void Aim()// Rotates the barrel("Vector Up") of the sentry to align with player
     {
         Vector2 direction = target.position - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
@@ -54,7 +54,7 @@ public class Sentry : Enemy
 
     }
 
-    bool IsAligned() 
+    bool IsAligned() // Verifies if the top barrel is aligned with player
     {
 
         RaycastHit2D hit = Physics2D.Raycast(
