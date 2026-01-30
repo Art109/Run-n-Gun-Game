@@ -18,7 +18,7 @@ public abstract class Enemy : MonoBehaviour , IDamageble
 
     
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if (data == null || currentGun == null || shootPoint == null)
         {
