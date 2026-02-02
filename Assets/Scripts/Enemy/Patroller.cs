@@ -1,7 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Patroller : Enemy
 {
+    /// <summary>
+    /// Melhorias : Range Dinamico com Aggro
+    /// </summary>
     enum State { Patrol, Chase, Attack }
 
     Transform target;
@@ -17,7 +20,12 @@ public class Patroller : Enemy
     [Header("Chase Params")]
     [SerializeField] float detectionMultiplier = 1.5f;
 
-    
+    [Header("Aggro Params")]
+    [SerializeField] float loseAggroDelay = 1.5f;
+
+    float loseAggroTimer;
+
+
 
     protected override void Awake()
     {
@@ -33,6 +41,8 @@ public class Patroller : Enemy
             Debug.LogWarning(this + "without Rb");
             gameObject.SetActive(false);
         }
+
+        currentState = State.Patrol;
     }
 
     protected override void Update() 
@@ -61,14 +71,26 @@ public class Patroller : Enemy
 
         if (player == null)
         {
-            target = null;
-            currentState = State.Patrol;
+            if (currentState != State.Patrol)
+            {
+                loseAggroTimer += Time.deltaTime;
+
+                if (loseAggroTimer >= loseAggroDelay)
+                {
+                    target = null;
+                    currentState = State.Patrol;
+                    loseAggroTimer = 0f;
+                }
+            }
             return;
         }
 
+        // Player encontrado → reseta memória
+        loseAggroTimer = 0f;
         target = player.transform;
 
         float distance = Vector2.Distance(transform.position, target.position);
+
 
         if (distance < Data.Range)
         {
@@ -76,7 +98,7 @@ public class Patroller : Enemy
         }
         else 
         { 
-            currentState |= State.Chase;
+            currentState = State.Chase;
         }
 
     }
@@ -91,9 +113,16 @@ public class Patroller : Enemy
         float dir = Mathf.Sign(target.position.x -  transform.position.x);
         direction = (int)dir;
 
-        Move();
+        if(BorderCheck())
+            Move();
+        else
+            StopMovement();
+           
+        
 
-        FaceDirection(direction);
+            FaceDirection(direction);
+
+        Debug.Log("Estou perseguindo");
     }
 
     void Patrol() // Logic of Patrol an Area

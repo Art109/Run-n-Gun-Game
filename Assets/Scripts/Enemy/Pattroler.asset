@@ -15,5 +15,5 @@ MonoBehaviour:
   hp: 0
   damage: 0
   moveSpeed: 10
-  range: 0
-  bulletPrefab: {fileID: 0}
+  range: 5
+  bulletPrefab: {fileID: 3855809050500161937, guid: 11a533aec64f2014c9a70d6b74cd1cce, type: 3}
