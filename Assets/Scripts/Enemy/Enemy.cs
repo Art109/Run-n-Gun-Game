@@ -4,6 +4,7 @@ public abstract class Enemy : MonoBehaviour , IDamageble
 {
     [Header("Core")]
     [SerializeField] EnemyData data;
+    // All enemies in this project are ranged by design (run'n gun prototype)
     [SerializeField] Gun currentGun;
     [SerializeField] Transform shootPoint;
     [SerializeField] LayerMask playerLayer;
