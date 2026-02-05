@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -12,10 +10,19 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement Params")]
     [SerializeField] float moveSpeed;
+    float moveInput;
     public float PlayerDirection { get; private set; } = 1f;
 
     [Header("Jump Params")]
     [SerializeField] float jumpForce;
+
+    [Header("Jump Feel")]
+    [SerializeField] float coyoteTime = 0.15f;
+    [SerializeField] float jumpBufferTime = 0.15f;
+
+    float coyoteTimeCounter;
+    float jumpBufferCounter;
+
 
     [Header("GroundCheck Param")]
     [SerializeField] Transform groundCheckPos;
@@ -23,10 +30,25 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float detectionRange;
 
 
-
-    public void Move(float direction)
+    private void FixedUpdate()
     {
-        rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y) ;
+        ApplyMovement();
+        HandleJump();
+    }
+
+    private void Update()
+    {
+        UpdateCoyoteTime();
+        UpdateJumpBuffer();
+    }
+
+    public void SetMovementInput(float input)
+    {
+        moveInput = input;
+    }
+    public void ApplyMovement()
+    {
+        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y) ;
     }
     
     public void FlipCharacter(float direction)
@@ -47,11 +69,34 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleJump() 
     {
-        if (GroundCheck())
+        if (jumpBufferCounter > 0 && coyoteTimeCounter > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+
+            // Consome os buffers
+            jumpBufferCounter = 0;
+            coyoteTimeCounter = 0;
         }
     }
+
+    public void BufferJumpInput()
+    {
+        jumpBufferCounter = jumpBufferTime;
+    }
+
+    void UpdateJumpBuffer()
+    {
+        jumpBufferCounter -= Time.deltaTime;
+    }
+
+    void UpdateCoyoteTime()
+    {
+        if (GroundCheck())
+            coyoteTimeCounter = coyoteTime;
+        else
+            coyoteTimeCounter -= Time.deltaTime;
+    }
+
 
     public bool GroundCheck()
     {

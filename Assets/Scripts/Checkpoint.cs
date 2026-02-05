@@ -16,6 +16,7 @@ public class Checkpoint : MonoBehaviour
         {
             activated = true;
             GameManager.Instance.SetCheckpoint(transform.position);
+            Debug.Log("Chekpointset");
         }
         
     }

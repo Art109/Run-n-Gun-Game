@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,7 +7,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player Movement")]
     [SerializeField]PlayerMovement movement;
-    float movementInput;
+    float moveInput;
+    bool jumpPressed;
 
     [Header("Player Shoot")]
     [SerializeField]PlayerShoot playerShoot;
@@ -23,24 +22,30 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        movement.Move(movementInput);
+
+        movement.SetMovementInput(moveInput);
+
+        if (jumpPressed)
+        {
+            movement.BufferJumpInput();
+            jumpPressed = false;
+        }
 
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        movementInput = context.ReadValue<Vector2>().x;
+        moveInput = context.ReadValue<Vector2>().x;
+
         if(context.performed)
-            movement.FlipCharacter(movementInput);
-        Debug.Log("Andei " + context.ReadValue<Vector2>());
+            movement.FlipCharacter(moveInput);
+        
     }
     public void OnJump(InputAction.CallbackContext context) 
     {
         if (context.performed)
         {
-            Debug.Log("Pulei");
-            movement.HandleJump();
+            jumpPressed = true;
         }
 
     }
