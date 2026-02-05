@@ -20,14 +20,14 @@ public class GunRuntime
         }
     }
 
-    public void TryShoot(Transform shootPoint, Vector2 direction, GameObject bulletPrefab)
+    public bool TryShoot(Transform shootPoint, Vector2 direction, GameObject bulletPrefab)
     {
         if (gun.FireRate <= 0f || cooldown > 0f)
-            return;
+            return false;
 
         gun.Shoot(shootPoint, direction, bulletPrefab);
         cooldown = 1f / gun.FireRate;
 
-
+        return true;
     }
 }
